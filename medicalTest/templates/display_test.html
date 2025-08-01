@@ -1,0 +1,93 @@
+<!-- templates/medicine_list.html -->
+{% extends 'base.html' %} <!-- Use your base template if you have one -->
+{% load static %}
+{% block title %}Medicine{% endblock title %}
+{% block content %}
+
+<div class="row p-5 align-items-center">
+    <div class="col-md-6">
+        <img  class="img-fluid" src="{% static 'test2.png' %}" alt="banar">
+
+    </div>
+    <div class="col-md-6">
+        <h3 style="font-family: Papyrus, fantasy;">
+            LifeTech Care started not just for business but business for service. The institution has been playing an uncompromising role since the beginning to provide healthy medicine services to the country and the people of the country.
+            LifeTech Care is on this long journey to deliver medicines of fair price, temperature controlled quality to the doorsteps of the people of Bangladesh.
+          </h3>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-2 bg-dark text-white pt-5 mb-3">
+        <table class="table table-dark table-striped p-5">
+            <thead class="px-5">
+              <tr class="p-5">
+                <th class="p-4" scope="col">Category</th>
+              </tr>
+            </thead>
+            <tbody class="px-5">
+                <tr>
+                    <td>
+                        <a  class="text-decoration-none" href="{% url 'seeTset' %}">ALL</a>
+                    </td>
+                </tr>
+                {% for i in category %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'category_slug' i.slug %}" class="text-decoration-none black  mt-1">{{i.name}}</a>
+                        </td>
+                    </tr>
+            
+                {% endfor %}
+             
+            </tbody>
+          </table>
+
+    </div> 
+    <div class="col-md-10">
+        
+      <table class="table table-dark table-striped p-5">
+        <thead class="px-5">
+          <tr class="p-5">
+            <th class="p-4" scope="col">#ID</th>
+            <th class="p-4" scope="col">Name</th>
+            <th class="p-4" scope="col">Type</th>
+            <th class="p-4" scope="col">Price</th>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <th class="p-4" scope="col">Action</th>
+                {% else %}
+                <th class="p-4" scope="col">Action</th>
+                {% endif %}
+      
+              {% endif %}
+    
+          </tr>
+        </thead>
+        <tbody class="px-5">
+          {% for medicine in data %}
+            <tr>
+              <td scope="row">{{ medicine.id }}</td>
+              <td>{{ medicine.name }}</td>
+              <td>{{ medicine.Type }}</td>
+    
+              <td>{{ medicine.price }}</td>
+              {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <td><a class="btn btn-info" href="{% url 'medicine_edit' medicine.id %}" >Edit</a> <a class="btn btn-danger" href="{% url 'medicine_delete' medicine.id %}">Delete</a></td>
+                {% else %}
+                <td><a class="btn btn-primary" href="{% url 'test_apply' medicine.id %}">Apply</a> </td>
+                {% endif %}
+      
+              {% endif %}
+            </tr>
+          {% endfor %}
+         
+        </tbody>
+      </table>
+    </div>
+    
+</div>
+
+{% endblock %}

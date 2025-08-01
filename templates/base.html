@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <style>
+
+      .footer_area{
+          background: #263238;
+      }
+      
+      .container12 {
+          width: 100%;
+          padding-right: 15px;
+          padding-left: 15px;
+          margin-right: auto;
+          margin-left: auto;
+      }
+      .single_footer ul li a, .single_footer ul li {
+          color: #999;
+          text-decoration: none;
+      }
+      .single_footer ul li a:hover{
+          color: red;
+      }
+      #Life:hover{
+          color: red;
+      }
+      #Life{
+          color:  #999999;
+      }
+      .footer_top {
+          padding: 80px 0 77px;
+          border-bottom: 1px solid #ddd;
+      }
+      .copyright_area {
+          padding: 30px 0;
+      }
+      .single_footer h3 {
+          font-size: 16px;
+          text-transform: capitalize;
+          font-weight: 600;
+          line-height: 12px;
+          margin-bottom: 25px;
+          color: #fff;
+      }
+      
+      /* Underline From Left */
+      .hvr-underline-from-left {
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        position: relative;
+        overflow: hidden;
+      }
+      .hvr-underline-from-left:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        right: 100%;
+        bottom: 0;
+        background: #2098D1;
+        height: 4px;
+        -webkit-transition-property: right;
+        transition-property: right;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+      }
+      .hvr-underline-from-left:hover:before, .hvr-underline-from-left:focus:before, .hvr-underline-from-left:active:before {
+        right: 0;
+      }
+      </style>
+      
+
+
+
+  </head>
+  <body class="bg-secondary-subtle">
+    <section class="mb-5 pb-5" >
+        <nav class=" fixed-top mb-5 navbar   navbar-expand-lg text-white" style="background: #263238;">
+            <div class="container-fluid">
+              <h3 class="navbar-brand text-white ps-5">LifeTech Care</h3>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'contact' %}">Contact us</a>
+                  </li>
+                  {% if request.user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'service' %}">Service</a>
+                  </li>
+                  {% if request.user.is_superuser %}
+                  
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'ddoctoradd' %}">Add Doctor</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'create_medicine' %}">Add Medicine</a>
+                  </li>
+                  
+                  {% endif %}
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'medicine_list' %}">Medicine</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'doctor' %}">Doctor</a>
+                  </li>
+                
+                  {% endif %}
+
+                  {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                      <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'create_test' %}">Add Test</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                      <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'seeTset' %}">MedicalTest</a>
+                    </li>
+                    
+                  {% endif %}
+                  {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                      <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'add_employee' %}">Add Employee</a>
+                    </li>
+                  
+                    {% endif %}
+                    <li class="nav-item">
+                      <a class="nav-link active text-white hvr-underline-from-left" aria-current="page" href="{% url 'display' %}">Employee</a>
+                    </li>
+                  {% endif %}
+               
+                </ul>
+                <div class="d-flex">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if request.user.is_authenticated %}
+            
+                    {% if user.patientmodel %}
+                      <li class="nav-item  mx-3">
+                        <a class="nav-link text-white hvr-underline-from-left" href="{% url 'profile' %}">Profile</a>
+                      </li>
+                    {% elif user.doctormodel %}
+                      <li class="nav-item  mx-3">
+                        <a class="nav-link text-white hvr-underline-from-left" href="{% url 'doctor_profile' %}">Doctor Profile</a>
+                      </li>
+                    {% else %}
+                    {% endif %}
+                    <li class="nav-item  mx-3">
+                      <a class="nav-link text-white hvr-underline-from-left" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+  
+                    <li class="nav-item  ">
+                      <a class="nav-link text-white hvr-underline-from-left" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item  mx-3">
+                      <a class="nav-link text-white hvr-underline-from-left" href="{% url 'login'%}">Login</a>
+                    </li>
+                    {% endif %}
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          {% for i in messages %}
+          <div>
+            <h3 class="text-{{i.tags}}">{{i}}</h3>
+          </div>
+          {% endfor %}
+    </section>
+
+    <section>
+
+      {% block content %}{% endblock content %}
+    </section>
+
+    <!-- Footer -->
+    <div class="footer_area">
+      <div class="container container12">
+          <div class="footer_top">
+              <div class="row">
+                  <div class="col-lg-3 col-md-6">
+                      <div style="color: #999999;" class="single_footer">
+                          <h3 style="color: white;">About Us</h3>
+                          <p style="text-align: justify;">LIFETECH Hospital ensures the best healthcare service comprise of professional service excellence with outstanding personal service</p> 
+                          <div class="footer_social">
+                              <h3 style="color: white;">Follow Us</h3> 
+                              <ul class="list-unstyled d-flex gap-3 text-decoration-none">
+                                  <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a></li> 
+  
+                                  <li><a href="https://twitter.com/i/flow/login" target="_blank"><i class="fa-brands fa-square-twitter"></i></a></li>
+  
+                                  <li><a href="https://www.instagram.com/?hl=bn" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                                  <li><a href="https://www.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div> 
+                  <div class="col-lg-3 col-md-6">
+                      <div style="color: #999999;" class="single_footer">
+                          <h3 style="color: white;">Information</h3> 
+                          <ul class="list-unstyled">
+                              <li><a href="{% url 'home' %}">Home</a></li> 
+                             
+                              <li><a href="{% url "doctor" %}">Premium Doctor</a></li> 
+                              <li><a href="#">Privacy and policy</a></li> 
+                              <li><a href="#">Contact Us</a></li>
+                          </ul>
+                      </div>
+                  </div> 
+                  <div class="col-lg-3 col-md-6">
+                      <div style="color: #999999;" class="single_footer">
+                          <h3 style="color: white;">Work With Us</h3> 
+                          <ul class="list-unstyled">
+                            <li><a href="{% url 'register' %}">Signup Appointment</a></li> 
+                            <li><a class="text-decoration-none" href="{% url 'login' %}">Signin for Appointment</a></li> 
+                              <li><a href="{% url "doctor" %}">Appointment a doctor</a></li>
+                          </ul>
+                      </div>
+                  </div> 
+                  <div class="col-lg-3 col-md-6">
+                      <div style="color: #999999;" class="single_footer column_3">
+                          <h3 style="color: white;">Get in touch</h3> 
+                          <ul class="list-unstyled">
+                              <li><i class="fa fa-home mr-2"></i> Kushtia, Bangladesh</li> 
+                              <li><i class="fa fa-phone mr-2"></i> (+88) 01981251861</li> <li><i class="fa fa-envelope-open-o mr-2"></i><a href="">hmnizum1714032@gmail.com</a></li>
+                          </ul> 
+                          <div class="footer-payment">
+                              <a href=""><img width="200" src="https://deshtutor.com/storage/img/paymeent.png" alt=""></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div> 
+          <div class="copyright_area">
+              <div class="row">
+                  <div class="col-lg-6 col-md-12">
+                      <div style="color: #999999;" class="copyright_conent">
+                          <p>Copyright © 2024 H.M.Nizum. All Right Reserved.</p>
+                      </div>
+                  </div> 
+                  <div class="col-lg-6 col-md-12">
+                      <div style="color: #999999;" class="single_footer footer_menu text-right d-flex">
+                          <ul class="list-unstyled d-flex gap-3">
+                              <li><a href="{% url 'home' %}">Home</a></li> 
+                              <li><a href="#">Doctor list</a></li> 
+                              <li><a href="#">Available Medicine</a></li> 
+                              <li><a href="#">Privacy</a></li> <li><a href="#">Contact Us</a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+    <!-- footer end -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
+
+
+  {% for i in messages %}
+  <script>
+    Swal.fire({
+      title: "Status",
+      text: "{{i}}",
+      icon: "{{i.tags}}",
+      confirmButtonText: 'ok'
+    });
+  </script>
+  {% endfor %}
+  </body>
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}POST Details{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div style="width: 70%; margin: auto">
+    <div class="row mt-5  d-flex align-items-center">
+        <div class="col-6">
+          {% if object.image %}
+          <img src="{{object.image.url}}" class="card-img-top mb-3" alt="user image">
+          {% else %}
+          <img style="height:300px" src="{% static 'd4.jpg' %}" class="card-img-top" alt="...">
+          {% endif %}
+        </div>
+        <div class="col-6 ml-3">
+          <h4 class="card-title pb-3">Name :- {{object.user.first_name}} {{object.user.last_name}}</h4>
+          <h6 class="card-text">Emaill :- {{object.user.email}}</h6>
+           
+          <h6 class="card-text">Designation :-
+            {% for des in object.designation.all %}
+           
+           <button class="card-text  btn btn-light">{{des}}</button>
+           {% endfor %}
+          </h6>
+          <h6 class="card-text">Specialization :-
+            {% for se in object.specialization.all %}
+           
+           <button class="card-text  btn btn-light">{{se}}</button>
+           {% endfor %}
+          </h6>
+          <h6 class="card-text">Available_time :-
+            {% for se in object.available_time.all %}
+           
+          {{se}}
+           {% endfor %}
+          </h6>
+          <h6 class="card-text">Fee :- {{object.fee}}Tk</h6>
+          {% if request.user.is_authenticated %}
+          {% if request.user.is_superuser %}
+            <a class="btn btn-info" href="{% url 'doctor_appointments' object.id %}">All Appointment</a>
+            {% else %}
+            <p class="pt-5">
+              <a class="btn btn-primary" href="{% url 'create_appointment'  object.id %}">Appointment</a>
+            </p>
+            {% endif %}
+          {% endif %}
+        </div>
+
+
+    </div>
+</div>
+<div class="container mt-5">
+  {% if reviews %}
+  <h2>Reviews:</h2>
+  <ul>
+    {% for review in reviews %}
+    <li>{{review.reviewer.user.first_name}} {{review.reviewer.user.last_name}} - {{ review.ratting }}</li>
+    <li style="list-style: none;">{{review.created_time}}</li>
+    <li style="list-style: none;">{{ review.body }} </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No reviews available.</p>
+{% endif %}
+<br>
+<br>
+
+</div>
+
+
+  
+{% endblock content %}

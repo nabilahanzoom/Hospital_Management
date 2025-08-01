@@ -1,0 +1,93 @@
+<!-- templates/medicine_list.html -->
+{% extends 'base.html' %} <!-- Use your base template if you have one -->
+{% load static %}
+{% block title %}Employee{% endblock title %}
+{% block content %}
+
+<div class=" align-items-center">
+    <div>
+        <img  class="img-fluid" src="{% static 'emp.jpg' %}" alt="banar">
+
+    </div>
+</div>
+
+<div class="row p-4">
+
+    <div class="col-md-2 bg-dark text-white pt-5 mb-3">
+        <table class="table table-dark table-striped p-5">
+            <thead class="px-5">
+              <tr class="p-5">
+                <th class="p-4" scope="col">Category</th>
+              </tr>
+            </thead>
+            <tbody class="px-5">
+                <tr>
+                    <td>
+                        <a  class="text-decoration-none" href="{% url 'display' %}">ALL</a>
+                    </td>
+                </tr>
+                {% for i in designation %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'desig_slug' i.slug %}" class="text-decoration-none black  mt-1">{{i.name}}</a>
+                        </td>
+                    </tr>
+            
+                {% endfor %}
+             
+            </tbody>
+          </table>
+
+    </div> 
+    <div class="col-md-10">
+        
+      <table class="table table-dark table-striped p-5">
+        <thead class="px-5">
+          <tr class="p-5">
+            <th class="p-4" scope="col">Name</th>
+            <th class="p-4" scope="col">email</th>
+            <th class="p-4" scope="col">phone</th>
+            <th class="p-4" scope="col">Address</th>
+            <th class="p-4" scope="col">Designation</th>
+            <th class="p-4" scope="col">Salary</th>
+            <th class="p-4" scope="col">Join date</th>
+            {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+            <th class="p-4" scope="col">Action</th>
+            {% endif %}
+  
+          {% endif %}
+            
+    
+          </tr>
+        </thead>
+        <tbody class="px-5">
+          {% for i in data %}
+            <tr>
+              <td scope="row">{{ i.name }}</td>
+              <td>{{ i.email }}</td>
+              <td>{{ i.phone }}</td>
+              <td>{{ i.address }}</td>
+              {% for j in i.designation.all %}
+              
+              <td>{{ j.name}}</td>
+              {% endfor %}
+              <td>{{ i.salary }}</td>
+              <td>{{ i.join_date }}</td>
+              {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <td><a class="btn btn-danger" href="{% url 'delete_employee' i.id %}">Fire</a></td>
+                {% endif %}
+      
+              {% endif %}
+              
+            </tr>
+          {% endfor %}
+         
+        </tbody>
+      </table>
+    </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home page{% endblock title %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <button class="px-5 py-2 mb-4 btn btn-success text-white ">{{data | length}} result found</button>
+    
+</div>
+<div class="container mt-5 ">
+    
+    <div class="row gap-5 mb-5">
+        {% for i in data %}
+            <div  class="card mb-2" style="width: 25rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <img src="{{i.image.url}}" class="card-img-top pt-2" alt="user image">
+                <div class="card-body">
+                    <h4 class="card-title text-info">{{i.name}}</h4>
+                    <p class="card-text">{{i.description | truncatewords:10}}</p>
+                    <p class="text-end">
+                        <a href="{% url 'service_details' i.id %}" class="btn btn-primary">Details</a>
+                    </p>
+                    
+                   
+                </div>
+            </div>
+        {% endfor %}
+            
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

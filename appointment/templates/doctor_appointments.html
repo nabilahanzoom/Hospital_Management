@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}All Appointment{% endblock title %}
+
+{% block content %}
+<div class="container mt-3">
+        <h2 class="mb-3">Appointments for Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h2>
+        {% if appointments %}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID#</th>
+                        <th scope="col">Patient</th>
+                        <th scope="col">Appointment Status</th>
+                        <th scope="col">Appointment Type</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                {% for appointment in appointments %}
+                    <tbody>
+                      <tr>
+                        <th scope="row">{{appointment.id}}</th>
+                        <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                        <td><a href="{% url 'change_appointment_status' appointment.id %}">{{ appointment.appointment_status }}</a></td>
+                        <td>{{ appointment.appointment_type }}</td>
+                        <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                    
+           
+        {% else %}
+            <p>No appointments found for this doctor.</p>
+        {% endif %}
+    </div>
+{% endblock %}

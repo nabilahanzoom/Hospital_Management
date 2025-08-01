@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+  <section class="vh-100" style="background-color: #f4f5f7;">
+    <div class=" py-3 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-8 col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-3 " style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 text-center pt-5 pb-5"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;
+                background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(165,238,253,1) 0%, rgba(236,235,227,1) 46%, rgba(86,204,229,1) 96%);
+
+                
+                ">
+                <img src="{% static 'patint.jpg' %}"
+                  alt="Avatar" class="img-fluid my-5" style="width: 200px; border-radius: 100px;" />
+                <h5 class="text-dark">{{data.user.first_name}} {{data.user.last_name}}</h5>
+                <p class="text-dark">{{data.educational_qualification}}</p>
+                <i class="far fa-edit mb-5"></i>
+              </div>
+              <div class="col-md-8 pt-5">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{data.user.email}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted">{{data.mobile_no}}</p>
+                    </div>
+                  </div>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Age</h6>
+                      <p class="text-muted">{{data.age}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Gender</h6>
+                      <p class="text-muted">{{data.gender}}</p>
+                    </div>
+                  </div>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <a class="btn btn-info" href="{% url 'patient_prescription' data.id %}"> Prescription</a>
+
+                    </div>
+                    <div class="col-6 mb-3">
+                      <div class="d-flex justify-content-start">
+                        <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                        <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                        <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<div class="mt-5">
+  <hr>
+</div>
+<div  class="">
+    <table style="padding-left: 130px; padding-right: 30px;" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Dr Name</th>
+            <th scope="col">Appointment Status</th>
+            <th scope="col">Appointment Type</th>
+            <th scope="col">Symptop</th>
+            <th scope="col">Time</th>
+            <th scope="col">Meet Link</th>
+            <th scope="col">Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in appointment %}
+            <tr>
+                <th scope="row">{{i.doctor}}</th>
+                <td>{{i.appointment_status}}</td>
+                <td>{{i.appointment_type}}</td>
+                <td>{{i.symptop}}</td>
+                <td> {% for j in i.doctor.available_time.all %}
+                  <p>{{j}} </p>
+                  {% endfor %}</td>
+  
+                {% if i.appointment_status == 'Running' and i.appointment_type == 'Online' %}
+                <td><a target="_blank" href="{{i.doctor.meet_link}}">{{i.doctor.meet_link}}</a></td>
+                 {% else %}                 
+                <td>Not Ready</td>
+                {% endif %}
+                <td><a href="{% url 'review' i.doctor.id %}">Comment</a></td>
+              </tr>
+    
+            {% endfor %}
+          
+        </tbody>
+      </table>
+</div>
+{% endblock content %}
